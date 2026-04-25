@@ -11,6 +11,7 @@ Health insurance companies handle thousands of repetitive customer queries daily
 ---
 
 ## 🏗️ Architecture
+
 User Query
 │
 ▼
@@ -67,7 +68,7 @@ User Query
 
 **1. Clone the repository**
 ```bash
-git clone https://github.com/YOUR_USERNAME/health-support-ai.git
+git clone https://github.com/YOUR_USERNAME/my-health-support-ai.git
 cd health-support-ai
 ```
 
