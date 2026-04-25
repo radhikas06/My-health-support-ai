@@ -3,417 +3,788 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>HealthAssist — Customer Support</title>
+  <title>CareDesk — Health Insurance Support</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --cream: #FAF8F5;
+      --warm-white: #FFFFFF;
+      --ink: #1C1917;
+      --ink-light: #57534E;
+      --ink-muted: #A8A29E;
+      --teal: #0D9488;
+      --teal-light: #CCFBF1;
+      --teal-dark: #0F766E;
+      --amber: #F59E0B;
+      --amber-light: #FEF3C7;
+      --red: #EF4444;
+      --red-light: #FEE2E2;
+      --green: #10B981;
+      --green-light: #D1FAE5;
+      --border: #E7E5E4;
+      --shadow-sm: 0 1px 3px rgba(28,25,23,0.08);
+      --shadow-md: 0 4px 16px rgba(28,25,23,0.10);
+      --shadow-lg: 0 8px 32px rgba(28,25,23,0.12);
+      --radius: 14px;
+      --radius-sm: 8px;
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #f0f4f8;
-      display: flex;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
       height: 100vh;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      grid-template-rows: 1fr;
       overflow: hidden;
     }
 
-    /* ── Sidebar ── */
-    .sidebar {
-      width: 260px;
-      background: #1a3c5e;
-      color: white;
+    /* ── LEFT PANEL ── */
+    .left-panel {
+      background: var(--warm-white);
+      border-right: 1px solid var(--border);
       display: flex;
       flex-direction: column;
-      padding: 24px 16px;
-      gap: 12px;
-    }
-
-    .sidebar h1 {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 8px;
-      color: #63b3ed;
-    }
-
-    .sidebar p {
-      font-size: 12px;
-      color: #a0aec0;
-      line-height: 1.5;
-      margin-bottom: 16px;
-    }
-
-    .sidebar-btn {
-      background: #2d6a9f;
-      border: none;
-      color: white;
-      padding: 10px 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 13px;
-      text-align: left;
-      transition: background 0.2s;
-    }
-
-    .sidebar-btn:hover { background: #3a82c3; }
-
-    .sidebar-btn.active { background: #63b3ed; color: #1a3c5e; font-weight: 600; }
-
-    /* ── Main Area ── */
-    .main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
+      padding: 0;
       overflow: hidden;
     }
 
-    /* ── Header ── */
-    .header {
-      background: white;
-      padding: 16px 24px;
-      border-bottom: 1px solid #e2e8f0;
+    .brand {
+      padding: 28px 24px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand-logo {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
+      margin-bottom: 4px;
     }
 
-    .header-avatar {
-      width: 40px; height: 40px;
-      background: #63b3ed;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--teal);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 18px;
     }
 
-    .header-info h2 { font-size: 16px; color: #1a3c5e; }
-    .header-info p { font-size: 12px; color: #68d391; }
+    .brand-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      color: var(--ink);
+      letter-spacing: -0.3px;
+    }
 
-    /* ── Views ── */
-    .view { display: none; flex: 1; flex-direction: column; overflow: hidden; }
-    .view.active { display: flex; }
+    .brand-tagline {
+      font-size: 12px;
+      color: var(--ink-muted);
+      font-weight: 400;
+      margin-top: 2px;
+    }
 
-    /* ── Chat View ── */
-    #chat-messages {
-      flex: 1;
-      overflow-y: auto;
-      padding: 24px;
+    .nav {
+      padding: 16px 16px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 4px;
     }
 
-    .message {
+    .nav-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--ink-muted);
+      padding: 8px 10px 4px;
+    }
+
+    .nav-btn {
       display: flex;
+      align-items: center;
       gap: 10px;
-      max-width: 75%;
-      animation: fadeIn 0.3s ease;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      border: none;
+      background: transparent;
+      color: var(--ink-light);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-align: left;
+      width: 100%;
     }
 
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .nav-btn:hover {
+      background: var(--cream);
+      color: var(--ink);
+    }
 
-    .message.user { align-self: flex-end; flex-direction: row-reverse; }
+    .nav-btn.active {
+      background: var(--teal-light);
+      color: var(--teal-dark);
+    }
 
-    .message-avatar {
-      width: 32px; height: 32px;
+    .nav-btn .nav-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      background: var(--cream);
+      flex-shrink: 0;
+      transition: all 0.15s;
+    }
+
+    .nav-btn.active .nav-icon {
+      background: var(--teal);
+    }
+
+    .status-bar {
+      margin-top: auto;
+      padding: 16px 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--green-light);
+      color: var(--green);
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--green);
       border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 14px;
+      animation: pulse-dot 2s infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* ── MAIN AREA ── */
+    .main {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--cream);
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      background: var(--warm-white);
+      border-bottom: 1px solid var(--border);
+      padding: 0 28px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       flex-shrink: 0;
     }
 
-    .message.bot .message-avatar { background: #1a3c5e; color: white; }
-    .message.user .message-avatar { background: #63b3ed; color: white; }
+    .topbar-left h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 18px;
+      color: var(--ink);
+      letter-spacing: -0.2px;
+    }
 
-    .message-content { display: flex; flex-direction: column; gap: 4px; }
+    .topbar-left p {
+      font-size: 12px;
+      color: var(--ink-muted);
+      margin-top: 1px;
+    }
 
-    .message-bubble {
-      padding: 12px 16px;
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tag {
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .tag-kb { background: var(--teal-light); color: var(--teal-dark); }
+    .tag-ai { background: var(--amber-light); color: #92400E; }
+
+    /* ── VIEWS ── */
+    .view { display: none; flex: 1; flex-direction: column; overflow: hidden; }
+    .view.active { display: flex; }
+
+    /* ── CHAT VIEW ── */
+    #chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      scroll-behavior: smooth;
+    }
+
+    #chat-messages::-webkit-scrollbar { width: 4px; }
+    #chat-messages::-webkit-scrollbar-track { background: transparent; }
+    #chat-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+    .msg-row {
+      display: flex;
+      gap: 12px;
+      animation: msgIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes msgIn {
+      from { opacity: 0; transform: translateY(12px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .msg-row.user {
+      flex-direction: row-reverse;
+    }
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+      align-self: flex-end;
+    }
+
+    .avatar-bot {
+      background: var(--teal);
+    }
+
+    .avatar-user {
+      background: var(--ink);
+    }
+
+    .msg-content {
+      max-width: 68%;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .msg-row.user .msg-content { align-items: flex-end; }
+
+    .bubble {
+      padding: 13px 16px;
       border-radius: 16px;
       font-size: 14px;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
-    .message.bot .message-bubble {
-      background: white;
-      color: #2d3748;
+    .bubble-bot {
+      background: var(--warm-white);
+      color: var(--ink);
       border-bottom-left-radius: 4px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
     }
 
-    .message.user .message-bubble {
-      background: #1a3c5e;
+    .bubble-user {
+      background: var(--ink);
       color: white;
       border-bottom-right-radius: 4px;
     }
 
-    .message-source {
-      font-size: 11px;
-      color: #a0aec0;
+    .msg-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
       padding: 0 4px;
     }
 
-    .message.user .message-source { text-align: right; }
-
-    .source-badge {
-      display: inline-block;
-      padding: 2px 8px;
-      border-radius: 10px;
+    .source-tag {
       font-size: 10px;
       font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 10px;
+      letter-spacing: 0.3px;
     }
 
-    .source-kb { background: #c6f6d5; color: #276749; }
-    .source-ai { background: #bee3f8; color: #2c5282; }
+    .source-kb { background: var(--teal-light); color: var(--teal-dark); }
+    .source-ai { background: var(--amber-light); color: #92400E; }
 
-    /* ── Ticket Button ── */
-    .ticket-suggestion {
-      background: #fff5f5;
-      border: 1px solid #fed7d7;
-      border-radius: 12px;
-      padding: 12px 16px;
-      font-size: 13px;
-      color: #742a2a;
+    /* ── TYPING ── */
+    .typing-dots {
+      display: flex;
+      gap: 4px;
+      padding: 4px 2px;
+      align-items: center;
+    }
+
+    .typing-dots span {
+      width: 6px;
+      height: 6px;
+      background: var(--ink-muted);
+      border-radius: 50%;
+      animation: typingBounce 1.2s ease-in-out infinite;
+    }
+
+    .typing-dots span:nth-child(2) { animation-delay: 0.15s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.3s; }
+
+    @keyframes typingBounce {
+      0%, 60%, 100% { transform: translateY(0); }
+      30% { transform: translateY(-5px); }
+    }
+
+    /* ── ESCALATION BANNER ── */
+    .escalation-banner {
+      margin: 0 28px;
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 18px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      animation: fadeIn 0.3s ease;
-    }
-
-    .raise-ticket-btn {
-      background: #e53e3e;
-      color: white;
-      border: none;
-      padding: 8px 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 12px;
-      white-space: nowrap;
-      transition: background 0.2s;
-    }
-
-    .raise-ticket-btn:hover { background: #c53030; }
-
-    /* ── Input Area ── */
-    .input-area {
-      background: white;
-      border-top: 1px solid #e2e8f0;
-      padding: 16px 24px;
-      display: flex;
-      gap: 10px;
-      align-items: flex-end;
-    }
-
-    .input-area textarea {
-      flex: 1;
-      border: 1.5px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 12px 16px;
-      font-size: 14px;
-      resize: none;
-      outline: none;
-      font-family: inherit;
-      max-height: 120px;
-      transition: border-color 0.2s;
-    }
-
-    .input-area textarea:focus { border-color: #63b3ed; }
-
-    .send-btn {
-      background: #1a3c5e;
-      color: white;
-      border: none;
-      width: 44px; height: 44px;
-      border-radius: 12px;
-      cursor: pointer;
-      font-size: 18px;
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.2s;
-      flex-shrink: 0;
-    }
-
-    .send-btn:hover { background: #2d6a9f; }
-    .send-btn:disabled { background: #a0aec0; cursor: not-allowed; }
-
-    /* ── Tickets View ── */
-    #tickets-view {
-      padding: 24px;
-      overflow-y: auto;
       gap: 16px;
-    }
-
-    #tickets-view h2 {
-      font-size: 18px;
-      color: #1a3c5e;
-      margin-bottom: 16px;
-    }
-
-    .ticket-card {
-      background: white;
-      border-radius: 12px;
-      padding: 16px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      box-shadow: var(--shadow-sm);
+      animation: msgIn 0.25s ease;
+      flex-shrink: 0;
       margin-bottom: 12px;
     }
 
-    .ticket-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
+    .escalation-text {
+      font-size: 13px;
+      color: var(--ink-light);
     }
 
-    .ticket-id { font-weight: 700; color: #1a3c5e; font-size: 14px; }
+    .escalation-text strong {
+      color: var(--ink);
+      display: block;
+      margin-bottom: 2px;
+      font-size: 13px;
+    }
 
-    .ticket-status {
+    .btn-ticket {
+      background: var(--ink);
+      color: white;
+      border: none;
+      padding: 9px 16px;
+      border-radius: var(--radius-sm);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-ticket:hover {
+      background: var(--teal-dark);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ── INPUT AREA ── */
+    .input-wrap {
+      background: var(--warm-white);
+      border-top: 1px solid var(--border);
+      padding: 16px 28px;
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .input-box {
+      flex: 1;
+      background: var(--cream);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 11px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--ink);
+      resize: none;
+      outline: none;
+      max-height: 120px;
+      transition: border-color 0.15s;
+      line-height: 1.5;
+    }
+
+    .input-box::placeholder { color: var(--ink-muted); }
+    .input-box:focus { border-color: var(--teal); background: white; }
+
+    .btn-send {
+      width: 42px;
+      height: 42px;
+      background: var(--teal);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+      flex-shrink: 0;
+    }
+
+    .btn-send:hover { background: var(--teal-dark); transform: translateY(-1px); }
+    .btn-send:disabled { background: var(--ink-muted); cursor: not-allowed; transform: none; }
+
+    .btn-send svg { width: 18px; height: 18px; }
+
+    /* ── TICKETS VIEW ── */
+    #tickets-view {
+      padding: 28px;
+      overflow-y: auto;
+      gap: 16px;
+      background: var(--cream);
+    }
+
+    .tickets-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .tickets-header h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      color: var(--ink);
+    }
+
+    .tickets-count {
+      background: var(--amber-light);
+      color: #92400E;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .ticket-card {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.15s;
+    }
+
+    .ticket-card:hover { box-shadow: var(--shadow-md); }
+
+    .ticket-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .ticket-num {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--ink-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .status-badge {
       padding: 3px 10px;
       border-radius: 20px;
       font-size: 11px;
       font-weight: 600;
     }
 
-    .status-open { background: #fef3c7; color: #92400e; }
-    .status-resolved { background: #d1fae5; color: #065f46; }
+    .status-open { background: var(--amber-light); color: #92400E; }
+    .status-resolved { background: var(--green-light); color: #065F46; }
 
-    .ticket-query { font-size: 13px; color: #4a5568; margin-bottom: 8px; }
-    .ticket-date { font-size: 11px; color: #a0aec0; }
-
-    .resolve-area { margin-top: 12px; display: flex; gap: 8px; }
-
-    .resolve-input {
-      flex: 1;
-      border: 1.5px solid #e2e8f0;
-      border-radius: 8px;
-      padding: 8px 12px;
-      font-size: 13px;
-      outline: none;
-      font-family: inherit;
+    .ticket-query {
+      font-size: 14px;
+      color: var(--ink);
+      font-weight: 500;
+      margin-bottom: 6px;
+      line-height: 1.4;
     }
 
-    .resolve-input:focus { border-color: #68d391; }
+    .ticket-time {
+      font-size: 11px;
+      color: var(--ink-muted);
+      margin-bottom: 12px;
+    }
 
-    .resolve-btn {
-      background: #38a169;
+    .resolution-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .resolution-input {
+      flex: 1;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 9px 13px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .resolution-input:focus { border-color: var(--green); }
+    .resolution-input::placeholder { color: var(--ink-muted); }
+
+    .btn-resolve {
+      background: var(--green);
       color: white;
       border: none;
-      padding: 8px 14px;
-      border-radius: 8px;
+      padding: 9px 16px;
+      border-radius: var(--radius-sm);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
       cursor: pointer;
-      font-size: 12px;
-      transition: background 0.2s;
+      white-space: nowrap;
+      transition: all 0.15s;
     }
 
-    .resolve-btn:hover { background: #276749; }
+    .btn-resolve:hover { background: #059669; }
+
+    .resolution-note {
+      margin-top: 10px;
+      padding: 8px 12px;
+      background: var(--green-light);
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      color: #065F46;
+    }
 
     .empty-state {
       text-align: center;
-      color: #a0aec0;
-      font-size: 14px;
-      margin-top: 40px;
+      padding: 60px 20px;
+      color: var(--ink-muted);
     }
 
-    /* ── Typing indicator ── */
-    .typing { display: flex; gap: 4px; align-items: center; padding: 4px 0; }
-    .typing span {
-      width: 7px; height: 7px;
-      background: #a0aec0;
-      border-radius: 50%;
-      animation: bounce 1.2s infinite;
+    .empty-icon { font-size: 40px; margin-bottom: 12px; }
+    .empty-state p { font-size: 14px; }
+
+    /* Quick suggestions */
+    .suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 0 28px 16px;
     }
-    .typing span:nth-child(2) { animation-delay: 0.2s; }
-    .typing span:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes bounce {
-      0%, 60%, 100% { transform: translateY(0); }
-      30% { transform: translateY(-6px); }
+
+    .suggestion-chip {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 12px;
+      color: var(--ink-light);
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .suggestion-chip:hover {
+      background: var(--teal-light);
+      color: var(--teal-dark);
+      border-color: var(--teal-light);
     }
   </style>
 </head>
 <body>
 
-<!-- Sidebar -->
-<div class="sidebar">
-  <h1>🏥 HealthAssist</h1>
-  <p>AI-powered support for your health insurance queries</p>
-  <button class="sidebar-btn active" onclick="showView('chat')">💬 Chat Support</button>
-  <button class="sidebar-btn" onclick="showView('tickets'); loadTickets()">🎫 View Tickets</button>
-</div>
+<!-- LEFT PANEL -->
+<aside class="left-panel">
+  <div class="brand">
+    <div class="brand-logo">
+      <div class="brand-icon">✦</div>
+      <span class="brand-name">CareDesk</span>
+    </div>
+    <p class="brand-tagline">Health Insurance Support Portal</p>
+  </div>
 
-<!-- Main -->
-<div class="main">
-  <div class="header">
-    <div class="header-avatar">🤖</div>
-    <div class="header-info">
-      <h2>HealthAssist AI</h2>
-      <p>● Online — Ready to help</p>
+  <nav class="nav">
+    <div class="nav-label">Support</div>
+    <button class="nav-btn active" onclick="showView('chat', this)">
+      <div class="nav-icon">💬</div>
+      Ask a Question
+    </button>
+    <button class="nav-btn" onclick="showView('tickets', this); loadTickets()">
+      <div class="nav-icon">📋</div>
+      My Tickets
+    </button>
+  </nav>
+
+  <div class="status-bar">
+    <div class="status-pill">
+      <div class="status-dot"></div>
+      AI Support Active
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <h2 id="view-title">Ask a Question</h2>
+      <p id="view-sub">Answers from our knowledge base or AI assistant</p>
+    </div>
+    <div class="topbar-right">
+      <span class="tag tag-kb">📗 Knowledge Base</span>
+      <span class="tag tag-ai">🤖 AI Assistant</span>
     </div>
   </div>
 
-  <!-- Chat View -->
+  <!-- CHAT VIEW -->
   <div id="chat-view" class="view active">
     <div id="chat-messages">
-      <div class="message bot">
-        <div class="message-avatar">🤖</div>
-        <div class="message-content">
-          <div class="message-bubble">
-            Hi! I'm HealthAssist, your AI support agent. I can help you with questions about your health insurance policy, claims, coverage, and more.<br><br>
-            How can I help you today?
+      <div class="msg-row">
+        <div class="avatar avatar-bot">✦</div>
+        <div class="msg-content">
+          <div class="bubble bubble-bot">
+            Hello! I'm your CareDesk assistant. I can help you with questions about your health insurance policy — claims, coverage, network hospitals, and more.<br><br>
+            What can I help you with today?
           </div>
         </div>
       </div>
     </div>
-    <div class="input-area">
-      <textarea id="user-input" placeholder="Type your question here..." rows="1"
-        onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault(); sendMessage();}"></textarea>
-      <button class="send-btn" id="send-btn" onclick="sendMessage()">➤</button>
+
+    <div class="suggestions" id="suggestions">
+      <button class="suggestion-chip" onclick="useChip(this)">How do I file a claim?</button>
+      <button class="suggestion-chip" onclick="useChip(this)">Is physiotherapy covered?</button>
+      <button class="suggestion-chip" onclick="useChip(this)">Cashless hospitalisation process</button>
+      <button class="suggestion-chip" onclick="useChip(this)">What is my deductible?</button>
+    </div>
+
+    <div class="input-wrap">
+      <textarea class="input-box" id="user-input" rows="1"
+        placeholder="Type your question…"
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage();}"></textarea>
+      <button class="btn-send" id="send-btn" onclick="sendMessage()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
     </div>
   </div>
 
-  <!-- Tickets View -->
+  <!-- TICKETS VIEW -->
   <div id="tickets-view" class="view">
-    <h2>🎫 Support Tickets</h2>
-    <div id="tickets-list"></div>
+    <div class="tickets-header">
+      <h2>Support Tickets</h2>
+      <span class="tickets-count" id="tickets-count">0 open</span>
+    </div>
+    <div id="tickets-list">
+      <div class="empty-state">
+        <div class="empty-icon">📭</div>
+        <p>No tickets yet. Raise one from the chat if you need further help.</p>
+      </div>
+    </div>
   </div>
-</div>
+
+</main>
 
 <script>
   let chatHistory = [];
-  let lastUserMessage = "";
+  let lastUserMessage = '';
   let botResponseCount = 0;
+  let suggestionsHidden = false;
 
-  function showView(view) {
+  function showView(view, btn) {
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-    document.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
     document.getElementById(view + '-view').classList.add('active');
-    event.target.classList.add('active');
+    if (btn) btn.classList.add('active');
+
+    if (view === 'chat') {
+      document.getElementById('view-title').textContent = 'Ask a Question';
+      document.getElementById('view-sub').textContent = 'Answers from our knowledge base or AI assistant';
+    } else {
+      document.getElementById('view-title').textContent = 'Support Tickets';
+      document.getElementById('view-sub').textContent = 'Track and resolve your open queries';
+    }
   }
 
-  function appendMessage(role, text, source = null) {
-    const container = document.getElementById('chat-messages');
+  function useChip(el) {
+    document.getElementById('user-input').value = el.textContent;
+    hideSuggestions();
+    sendMessage();
+  }
 
-    // Remove typing indicator if present
+  function hideSuggestions() {
+    if (!suggestionsHidden) {
+      const s = document.getElementById('suggestions');
+      if (s) s.style.display = 'none';
+      suggestionsHidden = true;
+    }
+  }
+
+  function appendMessage(role, text, source) {
+    hideSuggestions();
+    const container = document.getElementById('chat-messages');
     const typing = document.getElementById('typing-indicator');
     if (typing) typing.remove();
 
-    const div = document.createElement('div');
-    div.className = `message ${role}`;
+    const row = document.createElement('div');
+    row.className = `msg-row ${role}`;
 
-    const avatar = role === 'bot' ? '🤖' : '👤';
+    const avatarHTML = role === 'bot'
+      ? `<div class="avatar avatar-bot">✦</div>`
+      : `<div class="avatar avatar-user">👤</div>`;
+
     const sourceBadge = source
-      ? `<span class="source-badge ${source === 'Knowledge Base' ? 'source-kb' : 'source-ai'}">${source}</span>`
+      ? `<div class="msg-meta"><span class="source-tag ${source === 'Knowledge Base' ? 'source-kb' : 'source-ai'}">${source === 'Knowledge Base' ? '📗 Knowledge Base' : '🤖 AI Assistant'}</span></div>`
       : '';
 
-    div.innerHTML = `
-      <div class="message-avatar">${avatar}</div>
-      <div class="message-content">
-        <div class="message-bubble">${text}</div>
-        ${source ? `<div class="message-source">${sourceBadge}</div>` : ''}
+    const bubbleClass = role === 'bot' ? 'bubble-bot' : 'bubble-user';
+
+    row.innerHTML = `
+      ${avatarHTML}
+      <div class="msg-content">
+        <div class="bubble ${bubbleClass}">${text}</div>
+        ${sourceBadge}
       </div>`;
 
-    container.appendChild(div);
+    container.appendChild(row);
 
-    // Show raise ticket option after 2 bot responses
     if (role === 'bot') {
       botResponseCount++;
-      if (botResponseCount >= 2) {
-        showTicketSuggestion();
-      }
+      if (botResponseCount >= 2) showEscalation();
     }
 
     container.scrollTop = container.scrollHeight;
@@ -421,34 +792,36 @@
 
   function showTyping() {
     const container = document.getElementById('chat-messages');
-    const div = document.createElement('div');
-    div.className = 'message bot';
-    div.id = 'typing-indicator';
-    div.innerHTML = `
-      <div class="message-avatar">🤖</div>
-      <div class="message-content">
-        <div class="message-bubble">
-          <div class="typing"><span></span><span></span><span></span></div>
+    const row = document.createElement('div');
+    row.className = 'msg-row';
+    row.id = 'typing-indicator';
+    row.innerHTML = `
+      <div class="avatar avatar-bot">✦</div>
+      <div class="msg-content">
+        <div class="bubble bubble-bot">
+          <div class="typing-dots"><span></span><span></span><span></span></div>
         </div>
       </div>`;
-    container.appendChild(div);
+    container.appendChild(row);
     container.scrollTop = container.scrollHeight;
   }
 
-  function showTicketSuggestion() {
-    const container = document.getElementById('chat-messages');
-    // Remove existing suggestion if any
-    const existing = document.getElementById('ticket-suggestion');
-    if (existing) existing.remove();
-
-    const div = document.createElement('div');
-    div.id = 'ticket-suggestion';
-    div.className = 'ticket-suggestion';
-    div.innerHTML = `
-      <span>Still not satisfied? Raise a support ticket and our team will get back to you.</span>
-      <button class="raise-ticket-btn" onclick="raiseTicket()">🎫 Raise Ticket</button>`;
-    container.appendChild(div);
-    container.scrollTop = container.scrollHeight;
+  function showEscalation() {
+    if (document.getElementById('escalation-banner')) return;
+    const chatView = document.getElementById('chat-view');
+    const inputWrap = chatView.querySelector('.input-wrap');
+    const banner = document.createElement('div');
+    banner.className = 'escalation-banner';
+    banner.id = 'escalation-banner';
+    banner.innerHTML = `
+      <div class="escalation-text">
+        <strong>Still need help?</strong>
+        Raise a ticket and a specialist will get back to you within 24 hours.
+      </div>
+      <button class="btn-ticket" onclick="raiseTicket()">
+        <span>📋</span> Raise a Ticket
+      </button>`;
+    chatView.insertBefore(banner, inputWrap);
   }
 
   async function sendMessage() {
@@ -471,13 +844,11 @@
         body: JSON.stringify({ message, history: chatHistory })
       });
       const data = await res.json();
-
       chatHistory.push({ role: 'user', content: message });
       chatHistory.push({ role: 'assistant', content: data.response });
-
       appendMessage('bot', data.response, data.source);
-    } catch (err) {
-      appendMessage('bot', 'Sorry, something went wrong. Please try again.');
+    } catch (e) {
+      appendMessage('bot', 'Sorry, something went wrong. Please try again in a moment.');
     }
 
     document.getElementById('send-btn').disabled = false;
@@ -492,48 +863,56 @@
         body: JSON.stringify({ query: lastUserMessage })
       });
       const data = await res.json();
+      document.getElementById('escalation-banner').remove();
       appendMessage('bot', `✅ ${data.message}`);
-      document.getElementById('ticket-suggestion').remove();
-    } catch (err) {
-      appendMessage('bot', 'Failed to create ticket. Please try again.');
+    } catch (e) {
+      appendMessage('bot', 'Could not create ticket. Please try again.');
     }
   }
 
   async function loadTickets() {
     const list = document.getElementById('tickets-list');
-    list.innerHTML = '<p style="color:#a0aec0;font-size:13px;">Loading...</p>';
+    list.innerHTML = '<p style="color:var(--ink-muted);font-size:13px;padding:8px 0;">Loading tickets…</p>';
     try {
       const res = await fetch('/tickets');
       const tickets = await res.json();
+
+      const open = tickets.filter(t => t.status === 'open').length;
+      document.getElementById('tickets-count').textContent = `${open} open`;
+
       if (tickets.length === 0) {
-        list.innerHTML = '<div class="empty-state">No tickets raised yet.</div>';
+        list.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">📭</div>
+            <p>No tickets yet. Raise one from the chat if you need further help.</p>
+          </div>`;
         return;
       }
+
       list.innerHTML = tickets.map(t => `
         <div class="ticket-card">
-          <div class="ticket-card-header">
-            <span class="ticket-id">Ticket #${t.id}</span>
-            <span class="ticket-status status-${t.status}">${t.status.toUpperCase()}</span>
+          <div class="ticket-top">
+            <span class="ticket-num">Ticket #${t.id} · ${new Date(t.created_at).toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'})}</span>
+            <span class="status-badge status-${t.status}">${t.status === 'open' ? '⏳ Open' : '✅ Resolved'}</span>
           </div>
-          <div class="ticket-query">${t.query}</div>
-          <div class="ticket-date">Created: ${new Date(t.created_at).toLocaleString()}</div>
+          <div class="ticket-query">"${t.query}"</div>
           ${t.status === 'open' ? `
-            <div class="resolve-area">
-              <input class="resolve-input" id="res-${t.id}" placeholder="Enter resolution summary..." />
-              <button class="resolve-btn" onclick="resolveTicket(${t.id})">✓ Resolve</button>
+            <div class="resolution-row">
+              <input class="resolution-input" id="res-${t.id}" placeholder="Type resolution summary…" />
+              <button class="btn-resolve" onclick="resolveTicket(${t.id})">Resolve</button>
             </div>` : `
-            <div style="margin-top:8px;font-size:12px;color:#276749;">
-              ✅ Resolution: ${t.resolution}
+            <div class="resolution-note">
+              💡 Resolution: ${t.resolution}
             </div>`}
         </div>`).join('');
-    } catch (err) {
-      list.innerHTML = '<div class="empty-state">Failed to load tickets.</div>';
+    } catch (e) {
+      list.innerHTML = '<p style="color:var(--red);font-size:13px;">Failed to load tickets.</p>';
     }
   }
 
   async function resolveTicket(id) {
     const resolution = document.getElementById(`res-${id}`).value.trim();
-    if (!resolution) { alert('Please enter a resolution summary.'); return; }
+    if (!resolution) { alert('Please enter a resolution summary first.'); return; }
     try {
       await fetch(`/tickets/${id}/resolve`, {
         method: 'POST',
@@ -541,13 +920,13 @@
         body: JSON.stringify({ resolution })
       });
       loadTickets();
-    } catch (err) {
-      alert('Failed to resolve ticket.');
+    } catch (e) {
+      alert('Failed to resolve. Please try again.');
     }
   }
 
   // Auto-resize textarea
-  document.getElementById('user-input').addEventListener('input', function() {
+  document.getElementById('user-input').addEventListener('input', function () {
     this.style.height = 'auto';
     this.style.height = Math.min(this.scrollHeight, 120) + 'px';
   });
