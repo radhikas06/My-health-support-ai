@@ -1,0 +1,95 @@
+{
+  "entries": [
+    {
+      "id": 1,
+      "question": "What is my deductible?",
+      "answer": "Your annual deductible is the amount you pay before your insurance kicks in. Refer to your policy document Section 3 for your specific amount.",
+      "tags": [
+        "deductible",
+        "policy",
+        "payment"
+      ]
+    },
+    {
+      "id": 2,
+      "question": "How do I file a claim?",
+      "answer": "Log into the member portal, go to Claims > Submit New Claim, and upload your hospital bill and discharge summary.",
+      "tags": [
+        "claim",
+        "portal",
+        "hospital"
+      ]
+    },
+    {
+      "id": 3,
+      "question": "Is physiotherapy covered?",
+      "answer": "Physiotherapy is covered up to 20 sessions per year under the Wellness add-on plan. Check if your plan includes this add-on.",
+      "tags": [
+        "physiotherapy",
+        "wellness",
+        "coverage"
+      ]
+    },
+    {
+      "id": 4,
+      "question": "What is the cashless hospitalisation process?",
+      "answer": "Present your insurance card at any network hospital. The hospital will coordinate directly with us for pre-authorisation.",
+      "tags": [
+        "cashless",
+        "hospitalisation",
+        "network"
+      ]
+    },
+    {
+      "id": 5,
+      "question": "What is covered under my plan?",
+      "answer": "Your plan covers inpatient hospitalisation, day care procedures, pre and post hospitalisation expenses, and ambulance charges. Add-on covers may include maternity, wellness, and dental.",
+      "tags": [
+        "coverage",
+        "plan",
+        "benefits"
+      ]
+    },
+    {
+      "id": 6,
+      "question": "How do I add a family member to my policy?",
+      "answer": "Log into the member portal and go to Policy > Add Dependents. You can add spouse, children, and parents. Changes take effect from the next renewal date.",
+      "tags": [
+        "family",
+        "dependents",
+        "policy"
+      ]
+    },
+    {
+      "id": 7,
+      "question": "What is the waiting period for pre-existing conditions?",
+      "answer": "Pre-existing conditions have a standard waiting period of 36 months from policy inception. Critical illness riders may have different waiting periods.",
+      "tags": [
+        "waiting period",
+        "pre-existing",
+        "conditions"
+      ]
+    },
+    {
+      "id": 8,
+      "question": "How do I find a network hospital?",
+      "answer": "Visit our website and use the Hospital Locator tool under the Members section. You can search by city, pincode, or hospital name.",
+      "tags": [
+        "network",
+        "hospital",
+        "locator"
+      ]
+    },
+    {
+      "id": 9,
+      "question": "What happens if I get hospitalized abroad?",
+      "answer": "Your annual deductible is the amount you pay before your insurance kicks in. Refer to your policy document Section 3 for your specific amount.",
+      "tags": [
+        "what",
+        "happens",
+        "if",
+        "i"
+      ]
+    }
+  ]
+}
