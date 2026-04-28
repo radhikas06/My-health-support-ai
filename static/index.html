@@ -621,6 +621,7 @@
       border-color: var(--teal-light);
     }
   </style>
+  <script src="https://js.puter.com/v2/"></script>
 </head>
 <body>
 
@@ -753,7 +754,17 @@
       suggestionsHidden = true;
     }
   }
-
+  function formatMarkdown(text) {
+    return text
+      .replace(/### (.*?)(\n|$)/g, '<strong style="font-size:13px;">$1</strong><br>')
+      .replace(/## (.*?)(\n|$)/g, '<strong style="font-size:14px;">$1</strong><br>')
+      .replace(/# (.*?)(\n|$)/g, '<strong style="font-size:15px;">$1</strong><br>')
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+      .replace(/- (.*?)(\n|$)/g, '• $1<br>')
+      .replace(/\n/g, '<br>');
+  }
+  
   function appendMessage(role, text, source) {
     hideSuggestions();
     const container = document.getElementById('chat-messages');
@@ -776,7 +787,7 @@
     row.innerHTML = `
       ${avatarHTML}
       <div class="msg-content">
-        <div class="bubble ${bubbleClass}">${text}</div>
+        <div class="bubble ${bubbleClass}">${formatMarkdown(text)}</div>
         ${sourceBadge}
       </div>`;
 
@@ -844,9 +855,31 @@
         body: JSON.stringify({ message, history: chatHistory })
       });
       const data = await res.json();
-      chatHistory.push({ role: 'user', content: message });
-      chatHistory.push({ role: 'assistant', content: data.response });
-      appendMessage('bot', data.response, data.source);
+
+      if (data.source === 'AI_NEEDED') {
+        // Use Puter.js to call Claude
+        const systemPrompt = `You are a helpful customer support assistant for a health insurance company.
+        Only answer questions related to health insurance, medical coverage, claims, hospitals, and policies.
+        If the question is unrelated to health insurance, politely say you can only assist with health insurance queries.
+        Keep answers concise, accurate, and helpful.`;
+
+        const fullMessage = systemPrompt + "\n\nUser: " + message;
+        const aiResponse = await puter.ai.chat(fullMessage, {
+          model: 'claude-haiku-4-5'
+        });
+        console.log('Puter response:', JSON.stringify(aiResponse));
+        const aiText = aiResponse.message?.content?.[0]?.text 
+        || aiResponse?.text 
+        || aiResponse?.message?.content 
+        || "Sorry, I could not get a response.";
+        chatHistory.push({ role: 'user', content: message });
+        chatHistory.push({ role: 'assistant', content: aiText });
+        appendMessage('bot', aiText, 'AI Assistant');
+      } else {
+        chatHistory.push({ role: 'user', content: message });
+        chatHistory.push({ role: 'assistant', content: data.response });
+        appendMessage('bot', data.response, data.source);
+      }
     } catch (e) {
       appendMessage('bot', 'Sorry, something went wrong. Please try again in a moment.');
     }

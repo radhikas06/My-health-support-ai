@@ -1,14 +1,14 @@
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, JSONResponse
-from anthropic import Anthropic
+#from anthropic import Anthropic
 from dotenv import load_dotenv
 import json, sqlite3, datetime, os
 
 load_dotenv()
 
 app = FastAPI()
-client = Anthropic()
+#client = Anthropic()
 
 def load_kb():
     with open("kb.json", "r") as f:
@@ -137,23 +137,8 @@ async def chat(request: Request):
             "source": "Knowledge Base"
         })
 
-    system_prompt = """You are a helpful customer support assistant for a health insurance company.
-    Only answer questions related to health insurance, medical coverage, claims, hospitals, and policies.
-    If the question is unrelated to health insurance, politely say you can only assist with health insurance queries.
-    Keep answers concise, accurate, and helpful."""
-
-    messages = history + [{"role": "user", "content": user_message}]
-
-    response = client.messages.create(
-        model="claude-haiku-4-5-20251001",
-        max_tokens=500,
-        system=system_prompt,
-        messages=messages
-    )
-
     return JSONResponse({
-        "response": response.content[0].text,
-        "source": "AI Assistant"
+        "source": "AI_NEEDED"
     })
      
 @app.post("/ticket")

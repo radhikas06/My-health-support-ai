@@ -50,7 +50,7 @@ User Query
 
 | Layer | Choice | Reason |
 |---|---|---|
-| LLM | Claude Haiku (Anthropic) | Fast, cost-efficient, domain-guardrailable |
+| LLM | Claude Haiku via Puter.js | Free, no API key needed, user-pays model |
 | Backend | FastAPI (Python) | Async, modern, auto-docs |
 | Knowledge Base | JSON file | Simple, fast, swappable |
 | Ticket Store | SQLite | Zero-config, built into Python |
@@ -62,7 +62,7 @@ User Query
 
 ### Prerequisites
 - Python 3.9+
-- An Anthropic API key (get one at https://console.anthropic.com)
+- A free Puter account (sign up at https://puter.com) — needed for AI responses
 
 ### Steps
 
@@ -83,16 +83,12 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-**4. Add your API key**
-Create a `.env` file in the root folder:
-ANTHROPIC_API_KEY=your-api-key-here
-
-**5. Run the server**
+**4. Run the server**
 ```bash
 uvicorn main:app --reload
 ```
 
-**6. Open in browser**
+**5. Open in browser**
 http://127.0.0.1:8000
 
 ---
