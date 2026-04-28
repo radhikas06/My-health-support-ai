@@ -155,7 +155,7 @@ async def chat(request: Request):
         "response": response.content[0].text,
         "source": "AI Assistant"
     })
-    
+     
 @app.post("/ticket")
 async def raise_ticket(request: Request):
     body = await request.json()

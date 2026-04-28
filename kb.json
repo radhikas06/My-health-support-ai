@@ -101,6 +101,17 @@
         "covered",
         "under"
       ]
+    },
+    {
+      "id": 11,
+      "question": "what is my deductible",
+      "answer": "Your annual deductible is the amount you pay before your insurance kicks in. Refer to your policy document Section 3 for your specific amount.",
+      "tags": [
+        "what",
+        "is",
+        "my",
+        "deductible"
+      ]
     }
   ]
 }
