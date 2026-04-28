@@ -3,7 +3,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, JSONResponse
 from anthropic import Anthropic
 from dotenv import load_dotenv
-import json, sqlite3, datetime
+import json, sqlite3, datetime, os
 
 load_dotenv()
 
@@ -15,17 +15,37 @@ def load_kb():
         return json.load(f)["entries"]
 
 def search_kb(query: str):
-    kb = load_kb()
-    query_words = set(query.lower().split())
+    # Skip KB for negation queries
+    negation_words = {"not", "never", "don't", "doesnt", "doesn't", "isn't",
+                      "isnt", "aren't", "arent", "no", "without", "except", "exclude"}
+    query_lower = query.lower()
+    query_words = set(query_lower.split())
+
+    if query_words & negation_words:
+        return None
+
+    # Remove common filler words that cause false matches
+    stop_words = {"what", "is", "a", "an", "the", "how", "do", "i", "my",
+                  "can", "will", "are", "does", "me", "to", "for", "of",
+                  "in", "it", "this", "that", "and", "or", "about"}
+    meaningful_words = query_words - stop_words
+
+    # Need at least one meaningful word to match
+    if not meaningful_words:
+        return None
+
     best_match = None
     best_score = 0
-    for entry in kb:
+    for entry in load_kb():
         text = (entry["question"] + " " + " ".join(entry["tags"])).lower()
-        score = sum(1 for word in query_words if word in text)
+        score = sum(1 for word in meaningful_words if word in text)
         if score > best_score:
             best_score = score
             best_match = entry
-    return best_match if best_score >= 1 else None
+
+    # Require at least 2 meaningful words to match, or 1 if query is short
+    min_score = 2 if len(meaningful_words) >= 3 else 1
+    return best_match if best_score >= min_score else None
 
 def init_db():
     conn = sqlite3.connect("tickets.db")
@@ -118,9 +138,9 @@ async def chat(request: Request):
         })
 
     system_prompt = """You are a helpful customer support assistant for a health insurance company.
-Only answer questions related to health insurance, medical coverage, claims, hospitals, and policies.
-If the question is unrelated to health insurance, politely say you can only assist with health insurance queries.
-Keep answers concise, accurate, and helpful."""
+    Only answer questions related to health insurance, medical coverage, claims, hospitals, and policies.
+    If the question is unrelated to health insurance, politely say you can only assist with health insurance queries.
+    Keep answers concise, accurate, and helpful."""
 
     messages = history + [{"role": "user", "content": user_message}]
 
@@ -135,12 +155,12 @@ Keep answers concise, accurate, and helpful."""
         "response": response.content[0].text,
         "source": "AI Assistant"
     })
-
+    
 @app.post("/ticket")
 async def raise_ticket(request: Request):
     body = await request.json()
     query = body.get("query", "")
-    ticket_id = create_ticket(query)
+    ticket_id = create_ticket(query) 
     return JSONResponse({
         "message": f"Ticket #{ticket_id} created successfully. Our team will get back to you within 24 hours.",
         "ticket_id": ticket_id

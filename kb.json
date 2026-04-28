@@ -90,6 +90,17 @@
         "if",
         "i"
       ]
+    },
+    {
+      "id": 10,
+      "question": "What is covered under maternity?",
+      "answer": "Your plan covers inpatient hospitalisation, day care procedures, pre and post hospitalisation expenses, and ambulance charges. Add-on covers may include maternity, wellness, and dental.",
+      "tags": [
+        "what",
+        "is",
+        "covered",
+        "under"
+      ]
     }
   ]
 }
