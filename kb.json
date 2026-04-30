@@ -112,6 +112,17 @@
         "my",
         "deductible"
       ]
+    },
+    {
+      "id": 12,
+      "question": "What is a co-payment clause?",
+      "answer": "A co-payment is a fixed amount you pay per visit. Your plan's co-pay amounts are listed in Section 4 of your policy document.",
+      "tags": [
+        "what",
+        "is",
+        "a",
+        "co-payment"
+      ]
     }
   ]
 }

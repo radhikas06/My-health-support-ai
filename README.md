@@ -12,25 +12,25 @@ Health insurance companies handle thousands of repetitive customer queries daily
 
 ## 🏗️ Architecture
 
-User Query
-│
-▼
-┌─────────────────────┐
-│   Knowledge Base    │  ← Keyword search on JSON entries
-│   (kb.json)         │  ← Returns answer if match found
-└─────────┬───────────┘
-│ No match
-▼
-┌─────────────────────┐
-│   Claude AI         │  ← Guardrailed to health insurance domain
-│   (Haiku model)     │  ← Maintains conversation history
-└─────────┬───────────┘
-│ User still unsatisfied
-▼
-┌─────────────────────┐
-│   Ticket System     │  ← SQLite-backed support tickets
-│   (SQLite DB)       │  ← Agent resolves → feeds back to KB
-└─────────────────────┘
+    User Query
+        │
+        ▼
+    ┌─────────────────────┐
+    │   Knowledge Base    │  ← Keyword search on JSON entries
+    │   (kb.json)         │  ← Returns answer if match found
+    └─────────┬───────────┘
+              │ No match
+              ▼
+    ┌─────────────────────┐
+    │   Claude AI         │  ← Guardrailed to health insurance domain
+    │   (Haiku model)     │  ← Maintains conversation history
+    └─────────┬───────────┘
+              │ User still unsatisfied
+              ▼
+    ┌─────────────────────┐
+    │   Ticket System     │  ← SQLite-backed support tickets
+    │   (SQLite DB)       │  ← Agent resolves → feeds back to KB
+    └─────────────────────┘
 
 ---
 
