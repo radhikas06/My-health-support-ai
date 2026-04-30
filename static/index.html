@@ -865,7 +865,8 @@
 
         const fullMessage = systemPrompt + "\n\nUser: " + message;
         const aiResponse = await puter.ai.chat(fullMessage, {
-          model: 'claude-haiku-4-5'
+          model: 'claude-haiku-4-5',
+          max_tokens: 300
         });
         console.log('Puter response:', JSON.stringify(aiResponse));
         const aiText = aiResponse.message?.content?.[0]?.text 
